@@ -241,10 +241,12 @@ module MAILBOX_RANGE =
             let low = i * chunk
             let high = if i=partitionNum-1 then len else (i+1)*chunk
             let partitionLength = high - low
-            agents.[i] <- MailboxProcessor.Start(fun inbox-> 
-            // the message processing function
-                let rec Loop lineNumber processerArray = async {
-                    if lineNumber=numOfLines then
+            agents.[i] <- MailboxProcessor.Start(fun inbox->  async {
+                Thread.Sleep (1 * (partitionNum-i) )
+                let lineNumber = ref 0
+                let processerArray = Array.create partitionLength 0
+                while true do
+                    if !lineNumber=numOfLines then
                         results.[i] <- (Array.max processerArray)
                         //printfn "Z: %A" !count
                         if Interlocked.Decrement(count) = 0 then 
@@ -254,7 +256,7 @@ module MAILBOX_RANGE =
                         //read and add the numbers from the nexy line of M
                         if !verbosity=1 then printf "%A %A" lineNumber low
                         for k in 0 .. partitionLength-1 do
-                            processerArray.[k] <- array2d.[lineNumber].[low + k] + processerArray.[k]
+                            processerArray.[k] <- array2d.[!lineNumber].[low + k] + processerArray.[k]
                             if !verbosity=1 then printf " %A" processerArray.[k]
                         if !verbosity=1 then printfn ""
                         //Thread.Sleep 10
@@ -263,13 +265,13 @@ module MAILBOX_RANGE =
                             let mutable valuel = 0
                             let mutable valuer = 0
                             if (i>0) then 
-                                agents.[i-1].Post [i; lineNumber; processerArray.[0]]
+                                agents.[i-1].Post [i; !lineNumber; processerArray.[0]]
                             else
-                                agents.[partitionNum-1].Post [0; lineNumber; 0]
+                                agents.[partitionNum-1].Post [0; !lineNumber; 0]
                             if (i<partitionNum-1) then
-                                agents.[i+1].Post [i; lineNumber; processerArray.[partitionLength-1]]
+                                agents.[i+1].Post [i; !lineNumber; processerArray.[partitionLength-1]]
                             else 
-                                agents.[0].Post [-1; lineNumber; 0]
+                                agents.[0].Post [-1; !lineNumber; 0]
                             let! m1 = inbox.Receive()
                             let! m2 = inbox.Receive()
                             if m1.Item(0)=i-1 || m1.Item(0)=(-1) then valuel<-m1.Item(2)
@@ -279,11 +281,7 @@ module MAILBOX_RANGE =
                             let tmpArray = Array.concat [[|valuel|]; Array.copy processerArray; [|valuer|]]
                             for k in 0 .. partitionLength-1 do
                                 processerArray.[k] <- max tmpArray.[k] (max tmpArray.[k+1] tmpArray.[k+2])
-                            Thread.Sleep 10
-                        return! Loop (lineNumber+1) processerArray
                 }
-                Thread.Sleep (1 * (partitionNum-i) )
-                Loop 0 (Array.create partitionLength 0)
                 )
         actors_completed.Task.Wait ()
         Array.max results
@@ -341,20 +339,21 @@ module AKKA_RANGE =
             let low = i * chunk
             let high = if i=partitionNum-1 then len else (i+1)*chunk
             let partitionLength = high - low
-            agents.[i] <- spawn system (String.concat "" ["agent";string i]) <| fun (inbox:Actor<int list>) ->
-            // the message processing function
-                let rec Loop lineNumber processerArray = actor {
-                    //Thread.Sleep 1
-                    if lineNumber=numOfLines then
+            agents.[i] <- spawn system (String.concat "" ["agent";string i]) <| fun (inbox:Actor<int list>) ->actor {
+                Thread.Sleep (1 * (partitionNum-i) )
+                let lineNumber = ref 0
+                let processerArray = Array.create partitionLength 0
+                while true do
+                    if !lineNumber=numOfLines then
                         results.[i] <- (Array.max processerArray)
                         if Interlocked.Decrement(count) = 0 then 
                             actors_completed.SetResult true
                         ()
                     else
                         //read and add the numbers from the nexy line of M
-                        if !verbosity=1 then printf "%A %A" lineNumber low
+                        if !verbosity=1 then printf "%A %A" !lineNumber low
                         for k in 0 .. partitionLength-1 do
-                            processerArray.[k] <- array2d.[lineNumber].[low + k] + processerArray.[k]
+                            processerArray.[k] <- array2d.[!lineNumber].[low + k] + processerArray.[k]
                             if !verbosity=1 then printf " %A" processerArray.[k]
                         if !verbosity=1 then printfn ""
 
@@ -364,15 +363,15 @@ module AKKA_RANGE =
                             let mutable valuel = 0
                             let mutable valuer = 0
                             if (i>0) then 
-                                agents.[i-1].Tell [i; lineNumber; processerArray.[0]]
+                                agents.[i-1].Tell [i; !lineNumber; processerArray.[0]]
                                 //printfn "to left %A" i
                             else
-                                agents.[partitionNum-1].Tell [0; lineNumber; 0]
+                                agents.[partitionNum-1].Tell [0; !lineNumber; 0]
                             //Thread.Sleep 1
                             if (i<partitionNum-1) then
-                                agents.[i+1].Tell [i; lineNumber; processerArray.[partitionLength-1]]
+                                agents.[i+1].Tell [i; !lineNumber; processerArray.[partitionLength-1]]
                             else 
-                                agents.[0].Tell [-1; lineNumber; 0]
+                                agents.[0].Tell [-1; !lineNumber; 0]
                             //Thread.Sleep 1
                             let! m1 = inbox.Receive()
                             let! m2 = inbox.Receive()
@@ -383,16 +382,12 @@ module AKKA_RANGE =
                             let tmpArray = Array.concat [[|valuel|]; Array.copy processerArray; [|valuer|]]
                             for k in 0 .. partitionLength-1 do
                                 processerArray.[k] <- max tmpArray.[k] (max tmpArray.[k+1] tmpArray.[k+2])
-                            Thread.Sleep 10
                             // if Interlocked.Decrement(count) = 0 then 
                             //     count := partitionNum
                             //     actors_completed.SetResult true
                             // actors_completed.Task.Wait ()
                             // actors_completed.SetResult false
-                        return! Loop (lineNumber+1) processerArray
                 }
-                Thread.Sleep (1 * (partitionNum-i) )
-                Loop 0 (Array.create partitionLength 0)
         actors_completed.Task.Wait ()
         // for i in results do
         //     printf "%A " i

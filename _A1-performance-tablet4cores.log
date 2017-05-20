@@ -1,0 +1,396 @@
+ 
+ 
+*** Medium default-partitions (0) 
+... Environment.ProcessorCount: 4
+... ThreadPool Min: 4,4; Max: 32767,1000; Avail: 32767,1000
+... args: [|"m-1000-300000-1.txt"; "/*"; "0"; "0"|]
+... N1: 1000; N2: 300000; K: 12; Verbose: 0
+... partitions
+... 0 (1, 25001) 25000
+... 1 (25001, 50001) 25000
+... 2 (50001, 75001) 25000
+... 3 (75001, 100001) 25000
+... 4 (100001, 125001) 25000
+... 5 (125001, 150001) 25000
+... 6 (150001, 175001) 25000
+... 7 (175001, 200001) 25000
+... 8 (200001, 225001) 25000
+... 9 (225001, 250001) 25000
+... 10 (250001, 275001) 25000
+... 11 (275001, 300001) 25000
+
+$$$ sequential: no partitions
+$$$ duration: 638 ms
+$$$ 1000 max_sequential
+
+$$$ parallel_naive: no partitions
+$$$ duration: 1149 ms
+$$$ 1000 max_parallel_naive
+
+$$$ parallel_range: 12 partitions
+$$$ duration: 539 ms
+$$$ 1000 max_parallel_range
+
+$$$ async_range: 12 partitions
+$$$ duration: 517 ms
+$$$ 1000 max_async_range
+
+$$$ mailbox_range: 12 partitions
+$$$ duration: 472 ms
+$$$ 1000 max_mailbox_range
+
+$$$ akka_range: 12 partitions
+$$$ duration: 437 ms
+$$$ 1000 max_akka_range
+ 
+*** Medium explicit-partitions (24) 
+... Environment.ProcessorCount: 4
+... ThreadPool Min: 4,4; Max: 32767,1000; Avail: 32767,1000
+... args: [|"m-1000-300000-1.txt"; "/*"; "24"; "0"|]
+... N1: 1000; N2: 300000; K: 24; Verbose: 0
+... partitions
+... 0 (1, 12501) 12500
+... 1 (12501, 25001) 12500
+... 2 (25001, 37501) 12500
+... 3 (37501, 50001) 12500
+... 4 (50001, 62501) 12500
+... 5 (62501, 75001) 12500
+... 6 (75001, 87501) 12500
+... 7 (87501, 100001) 12500
+... 8 (100001, 112501) 12500
+... 9 (112501, 125001) 12500
+... 10 (125001, 137501) 12500
+... 11 (137501, 150001) 12500
+... 12 (150001, 162501) 12500
+... 13 (162501, 175001) 12500
+... 14 (175001, 187501) 12500
+... 15 (187501, 200001) 12500
+... 16 (200001, 212501) 12500
+... 17 (212501, 225001) 12500
+... 18 (225001, 237501) 12500
+... 19 (237501, 250001) 12500
+... 20 (250001, 262501) 12500
+... 21 (262501, 275001) 12500
+... 22 (275001, 287501) 12500
+... 23 (287501, 300001) 12500
+
+$$$ sequential: no partitions
+$$$ duration: 641 ms
+$$$ 1000 max_sequential
+
+$$$ parallel_naive: no partitions
+$$$ duration: 1197 ms
+$$$ 1000 max_parallel_naive
+
+$$$ parallel_range: 24 partitions
+$$$ duration: 464 ms
+$$$ 1000 max_parallel_range
+
+$$$ async_range: 24 partitions
+$$$ duration: 520 ms
+$$$ 1000 max_async_range
+
+$$$ mailbox_range: 24 partitions
+$$$ duration: 479 ms
+$$$ 1000 max_mailbox_range
+
+$$$ akka_range: 24 partitions
+$$$ duration: 490 ms
+$$$ 1000 max_akka_range
+ 
+*** Large default-partitions (0) 
+... Environment.ProcessorCount: 4
+... ThreadPool Min: 4,4; Max: 32767,1000; Avail: 32767,1000
+... args: [|"m-1000-1000000-1.txt"; "/*"; "0"; "0"|]
+... N1: 1000; N2: 1000000; K: 13; Verbose: 0
+... partitions
+... 0 (1, 83334) 83333
+... 1 (83334, 166667) 83333
+... 2 (166667, 250000) 83333
+... 3 (250000, 333333) 83333
+... 4 (333333, 416666) 83333
+... 5 (416666, 499999) 83333
+... 6 (499999, 583332) 83333
+... 7 (583332, 666665) 83333
+... 8 (666665, 749998) 83333
+... 9 (749998, 833331) 83333
+... 10 (833331, 916664) 83333
+... 11 (916664, 999997) 83333
+... 12 (999997, 1000001) 4
+
+$$$ sequential: no partitions
+$$$ duration: 2051 ms
+$$$ 1000 max_sequential
+
+$$$ parallel_naive: no partitions
+$$$ duration: 4109 ms
+$$$ 1000 max_parallel_naive
+
+$$$ parallel_range: 13 partitions
+$$$ duration: 1698 ms
+$$$ 1000 max_parallel_range
+
+$$$ async_range: 13 partitions
+$$$ duration: 1541 ms
+$$$ 1000 max_async_range
+
+$$$ mailbox_range: 13 partitions
+$$$ duration: 1521 ms
+$$$ 1000 max_mailbox_range
+
+$$$ akka_range: 13 partitions
+$$$ duration: 1536 ms
+$$$ 1000 max_akka_range
+ 
+*** Large explicit-partitions (24) 
+... Environment.ProcessorCount: 4
+... ThreadPool Min: 4,4; Max: 32767,1000; Avail: 32767,1000
+... args: [|"m-1000-1000000-1.txt"; "/*"; "24"; "0"|]
+... N1: 1000; N2: 1000000; K: 24; Verbose: 0
+... partitions
+... 0 (1, 41668) 41667
+... 1 (41668, 83335) 41667
+... 2 (83335, 125002) 41667
+... 3 (125002, 166669) 41667
+... 4 (166669, 208336) 41667
+... 5 (208336, 250003) 41667
+... 6 (250003, 291670) 41667
+... 7 (291670, 333337) 41667
+... 8 (333337, 375004) 41667
+... 9 (375004, 416671) 41667
+... 10 (416671, 458338) 41667
+... 11 (458338, 500005) 41667
+... 12 (500005, 541672) 41667
+... 13 (541672, 583339) 41667
+... 14 (583339, 625006) 41667
+... 15 (625006, 666673) 41667
+... 16 (666673, 708339) 41666
+... 17 (708339, 750005) 41666
+... 18 (750005, 791671) 41666
+... 19 (791671, 833337) 41666
+... 20 (833337, 875003) 41666
+... 21 (875003, 916669) 41666
+... 22 (916669, 958335) 41666
+... 23 (958335, 1000001) 41666
+
+$$$ sequential: no partitions
+$$$ duration: 2177 ms
+$$$ 1000 max_sequential
+
+$$$ parallel_naive: no partitions
+$$$ duration: 3870 ms
+$$$ 1000 max_parallel_naive
+
+$$$ parallel_range: 24 partitions
+$$$ duration: 1576 ms
+$$$ 1000 max_parallel_range
+
+$$$ async_range: 24 partitions
+$$$ duration: 1539 ms
+$$$ 1000 max_async_range
+
+$$$ mailbox_range: 24 partitions
+$$$ duration: 1524 ms
+$$$ 1000 max_mailbox_range
+
+$$$ akka_range: 24 partitions
+$$$ duration: 1396 ms
+$$$ 1000 max_akka_range
+ 
+*** Very Large default-partitions (0) 
+... Environment.ProcessorCount: 4
+... ThreadPool Min: 4,4; Max: 32767,1000; Avail: 32767,1000
+... args: [|"m-1000-10000000-1.txt"; "/*"; "0"; "0"|]
+... N1: 1000; N2: 10000000; K: 13; Verbose: 0
+... partitions
+... 0 (1, 833334) 833333
+... 1 (833334, 1666667) 833333
+... 2 (1666667, 2500000) 833333
+... 3 (2500000, 3333333) 833333
+... 4 (3333333, 4166666) 833333
+... 5 (4166666, 4999999) 833333
+... 6 (4999999, 5833332) 833333
+... 7 (5833332, 6666665) 833333
+... 8 (6666665, 7499998) 833333
+... 9 (7499998, 8333331) 833333
+... 10 (8333331, 9166664) 833333
+... 11 (9166664, 9999997) 833333
+... 12 (9999997, 10000001) 4
+
+$$$ sequential: no partitions
+$$$ duration: 20883 ms
+$$$ 1000 max_sequential
+
+$$$ parallel_naive: no partitions
+$$$ duration: 37544 ms
+$$$ 1000 max_parallel_naive
+
+$$$ parallel_range: 13 partitions
+$$$ duration: 15573 ms
+$$$ 1000 max_parallel_range
+
+$$$ async_range: 13 partitions
+$$$ duration: 15528 ms
+$$$ 1000 max_async_range
+
+$$$ mailbox_range: 13 partitions
+$$$ duration: 14739 ms
+$$$ 1000 max_mailbox_range
+
+$$$ akka_range: 13 partitions
+$$$ duration: 14909 ms
+$$$ 1000 max_akka_range
+ 
+*** Very Large explicit-partitions (24) 
+... Environment.ProcessorCount: 4
+... ThreadPool Min: 4,4; Max: 32767,1000; Avail: 32767,1000
+... args: [|"m-1000-10000000-1.txt"; "/*"; "24"; "0"|]
+... N1: 1000; N2: 10000000; K: 24; Verbose: 0
+... partitions
+... 0 (1, 416668) 416667
+... 1 (416668, 833335) 416667
+... 2 (833335, 1250002) 416667
+... 3 (1250002, 1666669) 416667
+... 4 (1666669, 2083336) 416667
+... 5 (2083336, 2500003) 416667
+... 6 (2500003, 2916670) 416667
+... 7 (2916670, 3333337) 416667
+... 8 (3333337, 3750004) 416667
+... 9 (3750004, 4166671) 416667
+... 10 (4166671, 4583338) 416667
+... 11 (4583338, 5000005) 416667
+... 12 (5000005, 5416672) 416667
+... 13 (5416672, 5833339) 416667
+... 14 (5833339, 6250006) 416667
+... 15 (6250006, 6666673) 416667
+... 16 (6666673, 7083339) 416666
+... 17 (7083339, 7500005) 416666
+... 18 (7500005, 7916671) 416666
+... 19 (7916671, 8333337) 416666
+... 20 (8333337, 8750003) 416666
+... 21 (8750003, 9166669) 416666
+... 22 (9166669, 9583335) 416666
+... 23 (9583335, 10000001) 416666
+
+$$$ sequential: no partitions
+$$$ duration: 22287 ms
+$$$ 1000 max_sequential
+
+$$$ parallel_naive: no partitions
+$$$ duration: 37686 ms
+$$$ 1000 max_parallel_naive
+
+$$$ parallel_range: 24 partitions
+$$$ duration: 15569 ms
+$$$ 1000 max_parallel_range
+
+$$$ async_range: 24 partitions
+$$$ duration: 15175 ms
+$$$ 1000 max_async_range
+
+$$$ mailbox_range: 24 partitions
+$$$ duration: 14517 ms
+$$$ 1000 max_mailbox_range
+
+$$$ akka_range: 24 partitions
+$$$ duration: 13006 ms
+$$$ 1000 max_akka_range
+ 
+*** Very Large (alt) default-partitions (0) 
+... Environment.ProcessorCount: 4
+... ThreadPool Min: 4,4; Max: 32767,1000; Avail: 32767,1000
+... args: [|"m-10000-1000000-1.txt"; "/*"; "0"; "0"|]
+... N1: 10000; N2: 1000000; K: 13; Verbose: 0
+... partitions
+... 0 (1, 83334) 83333
+... 1 (83334, 166667) 83333
+... 2 (166667, 250000) 83333
+... 3 (250000, 333333) 83333
+... 4 (333333, 416666) 83333
+... 5 (416666, 499999) 83333
+... 6 (499999, 583332) 83333
+... 7 (583332, 666665) 83333
+... 8 (666665, 749998) 83333
+... 9 (749998, 833331) 83333
+... 10 (833331, 916664) 83333
+... 11 (916664, 999997) 83333
+... 12 (999997, 1000001) 4
+
+$$$ sequential: no partitions
+$$$ duration: 20555 ms
+$$$ 10000 max_sequential
+
+$$$ parallel_naive: no partitions
+$$$ duration: 38273 ms
+$$$ 10000 max_parallel_naive
+
+$$$ parallel_range: 13 partitions
+$$$ duration: 14690 ms
+$$$ 10000 max_parallel_range
+
+$$$ async_range: 13 partitions
+$$$ duration: 14802 ms
+$$$ 10000 max_async_range
+
+$$$ mailbox_range: 13 partitions
+$$$ duration: 14900 ms
+$$$ 10000 max_mailbox_range
+
+$$$ akka_range: 13 partitions
+$$$ duration: 15426 ms
+$$$ 10000 max_akka_range
+ 
+*** Very Large (alt) explicit-partitions (24) 
+... Environment.ProcessorCount: 4
+... ThreadPool Min: 4,4; Max: 32767,1000; Avail: 32767,1000
+... args: [|"m-10000-1000000-1.txt"; "/*"; "24"; "0"|]
+... N1: 10000; N2: 1000000; K: 24; Verbose: 0
+... partitions
+... 0 (1, 41668) 41667
+... 1 (41668, 83335) 41667
+... 2 (83335, 125002) 41667
+... 3 (125002, 166669) 41667
+... 4 (166669, 208336) 41667
+... 5 (208336, 250003) 41667
+... 6 (250003, 291670) 41667
+... 7 (291670, 333337) 41667
+... 8 (333337, 375004) 41667
+... 9 (375004, 416671) 41667
+... 10 (416671, 458338) 41667
+... 11 (458338, 500005) 41667
+... 12 (500005, 541672) 41667
+... 13 (541672, 583339) 41667
+... 14 (583339, 625006) 41667
+... 15 (625006, 666673) 41667
+... 16 (666673, 708339) 41666
+... 17 (708339, 750005) 41666
+... 18 (750005, 791671) 41666
+... 19 (791671, 833337) 41666
+... 20 (833337, 875003) 41666
+... 21 (875003, 916669) 41666
+... 22 (916669, 958335) 41666
+... 23 (958335, 1000001) 41666
+
+$$$ sequential: no partitions
+$$$ duration: 22092 ms
+$$$ 10000 max_sequential
+
+$$$ parallel_naive: no partitions
+$$$ duration: 38552 ms
+$$$ 10000 max_parallel_naive
+
+$$$ parallel_range: 24 partitions
+$$$ duration: 15061 ms
+$$$ 10000 max_parallel_range
+
+$$$ async_range: 24 partitions
+$$$ duration: 17318 ms
+$$$ 10000 max_async_range
+
+$$$ mailbox_range: 24 partitions
+$$$ duration: 16529 ms
+$$$ 10000 max_mailbox_range
+
+$$$ akka_range: 24 partitions
+$$$ duration: 15129 ms
+$$$ 10000 max_akka_range

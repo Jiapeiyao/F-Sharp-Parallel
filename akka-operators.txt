@@ -1,0 +1,4 @@
+|!> op_BarBangGreater pipeTo // NoSender
+<!| op_LessBangBar    pipeTo // NoSender
+<!  op_LessBang       Tell
+<?  op_LessQmark      AwaitTask

@@ -281,6 +281,7 @@ module MAILBOX_RANGE =
                             let tmpArray = Array.concat [[|valuel|]; Array.copy processerArray; [|valuer|]]
                             for k in 0 .. partitionLength-1 do
                                 processerArray.[k] <- max tmpArray.[k] (max tmpArray.[k+1] tmpArray.[k+2])
+                        incr lineNumber
                 }
                 )
         actors_completed.Task.Wait ()
@@ -349,14 +350,17 @@ module AKKA_RANGE =
                         if Interlocked.Decrement(count) = 0 then 
                             actors_completed.SetResult true
                         ()
-                    else
+                    elif !lineNumber<numOfLines then
                         //read and add the numbers from the nexy line of M
                         if !verbosity=1 then printf "%A %A" !lineNumber low
+                        incr lineNumber
                         for k in 0 .. partitionLength-1 do
+                            //printf "%A " k
                             processerArray.[k] <- array2d.[!lineNumber].[low + k] + processerArray.[k]
-                            if !verbosity=1 then printf " %A" processerArray.[k]
+                            //if !verbosity=1 then printf " %A" processerArray.[k]
                         if !verbosity=1 then printfn ""
-
+                        //printfn "%A" !lineNumber
+                        //printfn "%A" !lineNumber
                         //printfn "(%A %A)" i processerArray.[0]
                         if (partitionLength-1)>=0 then
                             //send and receive message to find max of neighbors and self
@@ -372,7 +376,7 @@ module AKKA_RANGE =
                                 agents.[i+1].Tell [i; !lineNumber; processerArray.[partitionLength-1]]
                             else 
                                 agents.[0].Tell [-1; !lineNumber; 0]
-                            //Thread.Sleep 1
+                            Thread.Sleep 1
                             let! m1 = inbox.Receive()
                             let! m2 = inbox.Receive()
                             if m1.Item(0)=i-1 || m1.Item(0)=(-1) then valuel<-m1.Item(2)
@@ -381,20 +385,21 @@ module AKKA_RANGE =
                             elif m2.Item(0)=i+1 || m2.Item(0)=0 then valuer<-m2.Item(2)
                             let tmpArray = Array.concat [[|valuel|]; Array.copy processerArray; [|valuer|]]
                             for k in 0 .. partitionLength-1 do
+                                //printfn "%A" !lineNumber
                                 processerArray.[k] <- max tmpArray.[k] (max tmpArray.[k+1] tmpArray.[k+2])
                             // if Interlocked.Decrement(count) = 0 then 
                             //     count := partitionNum
                             //     actors_completed.SetResult true
                             // actors_completed.Task.Wait ()
                             // actors_completed.SetResult false
+                        //incr lineNumber
+                        //printfn "%A" !lineNumber
                 }
         actors_completed.Task.Wait ()
         // for i in results do
         //     printf "%A " i
         // printfn ""
         Array.max results
-
-   
 
     let Output (M: int[][]) k =
         printfn "$$$ Akka_range: %A" k
@@ -414,7 +419,7 @@ module AKKA_RANGE =
     //     Output M 6
 
         
-[<EntryPoint >]
+//[<EntryPoint >]
 let main args = 
     let run fname alg k v =
         let M:int[][] = Data.getData fname
@@ -437,7 +442,7 @@ let main args =
     0
 
 
-//main [|"m-100-3000-lr.txt"; "/ASYNC-RANGE"; "1"; "0" |]
+main [|"m-100-3000-lr.txt"; "/AKKA-RANGE"; "2"; "1" |]
 
 
 
